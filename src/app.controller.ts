@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('api')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  scrapeEbay(): Promise<any> {
-    return this.appService.scrapeEbayUrl();
+  @Get('/hello')
+  getHello(@Query('visitor_name') visitor_name: string): Promise<any> {
+    return this.appService.getHello(visitor_name);
   }
 }
