@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 
 type returnBody = {
   client_ip?: string;
@@ -43,16 +42,19 @@ export class AppService {
     const ip = request.headers['x-forwarded-for'];
     console.log(ip);
 
-    const client_temp_response = await axios.get(
-      `http://api.weatherapi.com/v1/current.json?key=${this.weather_apikey}&q=${city}`,
-    );
+    // const client_temp_response = await axios.get(
+    //   `http://api.weatherapi.com/v1/current.json?key=${this.weather_apikey}&q=${city}`,
+    // );
 
-    const client_temp = client_temp_response.data.current.temp_c;
+    // const client_temp = client_temp_response.data.current.temp_c;
 
     return {
-      client_ip: ip,
-      location: city,
-      greeting: `Hello, ${client_name}!, the temperature is ${client_temp} degrees Celsius in ${city}`,
+      client_ip: '8.8.8.8',
+      location: 'a string',
+      greeting: 'a string',
+      // client_ip: ip,
+      // location: city,
+      // greeting: `Hello, ${client_name}!, the temperature is ${client_temp} degrees Celsius in ${city}`,
     };
   }
 }
