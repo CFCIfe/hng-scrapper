@@ -37,10 +37,10 @@ export class AppService {
 
     // // const { city } = client_location_response.data;
 
-    const city = request.headers['X-Vercel-IP-City'];
+    const city = request.headers.get('X-Vercel-IP-City');
     console.log(city);
-    const ip = request.headers['x-forwarded-for'];
-    console.log(ip);
+    // const ip = request.headers['x-forwarded-for'];
+    // console.log(ip);
 
     // const client_temp_response = await axios.get(
     //   `http://api.weatherapi.com/v1/current.json?key=${this.weather_apikey}&q=${city}`,
