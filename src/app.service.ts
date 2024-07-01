@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ipAddress } from '@vercel/edge';
 import axios from 'axios';
 
 type returnBody = {
@@ -16,7 +17,7 @@ export class AppService {
     this.weather_apikey = process.env.WEATHERAPI_API_KEY;
   }
 
-  async getHello(name: string): Promise<returnBody> {
+  async getHello(name: string, request: Request): Promise<returnBody> {
     if (!name) {
       return { greeting: 'Request failed. Please provide a visitor name' };
     }
@@ -24,12 +25,13 @@ export class AppService {
     const client_name = name.charAt(0).toUpperCase() + name.slice(1);
 
     // Get the client's IP address
+    const ip = await ipAddress(request);
     // Get the client's location
     const client_location_response = await axios.get(
-      `https://api.ipdata.co?api-key=${this.ipdata_apikey}`,
+      `https://api.ipdata.co/${ip}?api-key=${this.ipdata_apikey}`,
     );
 
-    const { ip, city } = client_location_response.data;
+    const { city } = client_location_response.data;
 
     const client_temp_response = await axios.get(
       `http://api.weatherapi.com/v1/current.json?key=${this.weather_apikey}&q=${city}`,

@@ -23,6 +23,7 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@vercel/edge": "^1.1.1",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "puppeteer-extra": "^3.3.6",
