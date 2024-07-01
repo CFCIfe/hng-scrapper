@@ -37,7 +37,7 @@ export class AppService {
 
     // // const { city } = client_location_response.data;
 
-    const city = request.headers.get('X-Vercel-IP-City');
+    const city = request.headers.get('x-vercel-ip-city');
     console.log(city);
     // const ip = request.headers['x-forwarded-for'];
     // console.log(ip);
