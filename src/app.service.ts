@@ -24,27 +24,23 @@ export class AppService {
     const client_name = name.charAt(0).toUpperCase() + name.slice(1);
 
     // Get the client's IP address
-    const client_ip_response = await axios.get(
-      'https://api.ipify.org?format=json',
-    );
-    const client_ip = client_ip_response.data.ip;
     // Get the client's location
     const client_location_response = await axios.get(
-      `https://api.ipdata.co/${client_ip}?api-key=${this.ipdata_apikey}`,
+      `https://api.ipdata.co?api-key=${this.ipdata_apikey}`,
     );
 
-    const client_city = client_location_response.data.city;
+    const { ip, city } = client_location_response.data;
 
     const client_temp_response = await axios.get(
-      `http://api.weatherapi.com/v1/current.json?key=${this.weather_apikey}&q=${client_city}`,
+      `http://api.weatherapi.com/v1/current.json?key=${this.weather_apikey}&q=${city}`,
     );
 
     const client_temp = client_temp_response.data.current.temp_c;
 
     return {
-      client_ip: client_ip,
-      location: client_city,
-      greeting: `Hello, ${client_name}!, the temperature is ${client_temp} degrees Celsius in ${client_city}`,
+      client_ip: ip,
+      location: city,
+      greeting: `Hello, ${client_name}!, the temperature is ${client_temp} degrees Celsius in ${city}`,
     };
   }
 }
