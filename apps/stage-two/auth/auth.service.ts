@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDataDto } from '../src/dto/user.dto';
@@ -34,6 +38,12 @@ export class AuthService {
       where: { userId },
       relations: ['organisations'],
     });
+
+    if (!user || user.organisations.length === 0) {
+      throw new UnauthorizedException(
+        'User does not have access to any organisations',
+      );
+    }
 
     return {
       status: 'success',

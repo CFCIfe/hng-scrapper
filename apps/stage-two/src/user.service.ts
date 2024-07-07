@@ -117,10 +117,15 @@ export class UserService {
 
       const { userId } = user;
 
-      const accessToken = await this.jwtService.signAsync({
-        sub: userId,
-        username: userObj.email,
-      });
+      const accessToken = await this.jwtService.signAsync(
+        {
+          sub: userId,
+          username: userObj.email,
+        },
+        {
+          expiresIn: '1h',
+        },
+      );
 
       return {
         status: 'success',
@@ -145,19 +150,22 @@ export class UserService {
     }
   }
 
-  async LoginUser(
-    LoginUser: UserLoginDto,
-  ): Promise<SuccessDto | UnauthorizedException> {
+  async LoginUser(LoginUser: UserLoginDto): Promise<any> {
     const { email, password } = LoginUser;
 
     const user = await this.validateUser(email, password);
 
     const { userId, firstName, lastName, phone } = user;
 
-    const accessToken = await this.jwtService.signAsync({
-      sub: userId,
-      email,
-    });
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: userId,
+        email,
+      },
+      {
+        expiresIn: '1h',
+      },
+    );
 
     return {
       status: 'success',

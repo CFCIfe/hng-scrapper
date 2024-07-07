@@ -7,12 +7,7 @@ import {
   UnauthorizedException,
   ValidationPipe,
 } from '@nestjs/common';
-import {
-  FailureDto,
-  RegisterUserDto,
-  SuccessDto,
-  UserLoginDto,
-} from './dto/user.dto';
+import { RegisterUserDto, SuccessDto, UserLoginDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Controller('auth')
@@ -27,7 +22,7 @@ export class UserController {
   @Post('/register')
   async registerUser(
     @Body(new ValidationPipe()) registerUserDto: RegisterUserDto,
-  ): Promise<SuccessDto | FailureDto> {
+  ): Promise<any> {
     return this.userService.RegisterUser(registerUserDto);
   }
 
